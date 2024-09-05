@@ -17,7 +17,7 @@ export class LoginComponent {
   users = [
     { name: "Yoda", username: "yoda@griffith.au", password: "yoda413" },
     { name: "Buster", username: "buster@griffith.au", password: "buster816" },
-    { name: "Porthus", username: "porthus@griffith.au", password: "porthus1234" }
+    { name: "Porthus", username: "porthus@griffith.au", password: "porthus44" }
   ];
 
   constructor(private router: Router) {}
