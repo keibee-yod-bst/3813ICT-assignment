@@ -57,6 +57,12 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+	  
+            "host":"s5270448.elf.ict.griffith.edu.au",
+            "port": 8080
+            
+        },
           "configurations": {
             "production": {
               "buildTarget": "assignment:build:production"
