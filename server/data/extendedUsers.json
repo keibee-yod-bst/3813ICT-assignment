@@ -1,30 +1,30 @@
 [{
     "userid": 1,
     "username": "yoda@griffith.au",
-    "userbirthdate": "2017-04-13",
-    "userage": 7
+    "userrole": "Giliam",
+    "usergroup": 1
 },
 {
     "userid": 2,
     "username": "buster@griffith.au",
-    "userbirthdate": "2013-08-16",
-    "userage": 11
+    "userrole": "Giliam",
+    "usergroup": 1
 },
 {
     "userid": 3,
     "username": "porthus@griffith.au",
-    "userbirthdate": "2023-04-04",
-    "userage": 1
+    "userrole": "Ferguson",
+    "usergroup": 3
 },
 {
     "userid": 4,
     "username": "elle@griffith.au",
-    "userbirthdate": "1996-04-24",
-    "userage": 28
+    "userrole": "Giliam",
+    "usergroup": 2
 },
 {
     "userid": 5,
     "username": "jess@griffith.au",
-    "userbirthdate": "1967-09-25",
-    "userage": 56
+    "userrole": "Giliam",
+    "usergroup": 2
 }]

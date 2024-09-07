@@ -16,12 +16,12 @@ const BACKEND_URL = "http://s5270448.elf.ict.griffith.edu.au:8080";
 export class ProfileComponent {
   userid = 0;
   username = "";
-  userbirthdate = "";
-  userage = 0;
+  userrole = "";
+  usergroup = 0;
   constructor(private httpClient: HttpClient) {
     this.username = sessionStorage.getItem('username')!;
-    this.userbirthdate = sessionStorage.getItem('userbirthdate')!;
-    this.userage = Number(sessionStorage.getItem('userage'));
+    this.userrole = sessionStorage.getItem('userrole')!;
+    this.usergroup = Number(sessionStorage.getItem('usergroup'));
     this.userid = Number(sessionStorage.getItem('userid'));
   }
 
@@ -29,8 +29,8 @@ export class ProfileComponent {
     let userobj = {
       'userid': this.userid,
       'username': this.username,
-      'userbirthdate': this.userbirthdate,
-      'userage': this.userage
+      'userrole': this.userrole,
+      'usergroup': this.usergroup
     }
     this.httpClient.post<any>(BACKEND_URL + '/loginafter', userobj, httpOptions)
     .subscribe((m: any) => {alert(JSON.stringify(m));})

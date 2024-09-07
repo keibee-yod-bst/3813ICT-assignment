@@ -22,6 +22,7 @@ export class LoginComponent {
   email =  "";
   password = "";
 
+  super = { email: "super", password:"123"}
   /*
   users = [
     { name: "Yoda", username: "yoda@griffith.au", password: "yoda413" },
@@ -44,8 +45,8 @@ export class LoginComponent {
         sessionStorage.setItem('userid', data.userid.toString());
         sessionStorage.setItem('userlogin', data.ok.toString());
         sessionStorage.setItem('username', data.username);
-        sessionStorage.setItem('userbirthdate', data.userbirthdate);
-        sessionStorage.setItem('userage', data.userage.toString());
+        sessionStorage.setItem('userrole', data.userrole);
+        sessionStorage.setItem('usergroup', data.usergroup.toString());
         this.router.navigateByUrl('/account');
       }
       else {alert("Invalid username or password. Please try again.");}
