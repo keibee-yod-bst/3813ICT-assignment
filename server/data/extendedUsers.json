@@ -1,30 +1,36 @@
 [{
     "userid": 1,
-    "username": "yoda@griffith.au",
-    "userrole": "Giliam",
+    "username": "super",
+    "roles": ["SuperAdmin"],
     "usergroup": 1
 },
 {
     "userid": 2,
-    "username": "buster@griffith.au",
-    "userrole": "Giliam",
+    "username": "yoda@griffith.au",
+    "roles": ["User", "GroupAdmin"],
     "usergroup": 1
 },
 {
     "userid": 3,
-    "username": "porthus@griffith.au",
-    "userrole": "Ferguson",
-    "usergroup": 3
+    "username": "buster@griffith.au",
+    "userrole": "User",
+    "usergroup": 1
 },
 {
     "userid": 4,
-    "username": "elle@griffith.au",
-    "userrole": "Giliam",
-    "usergroup": 2
+    "username": "porthus@griffith.au",
+    "userrole": "User",
+    "usergroup": [1, 3]
 },
 {
     "userid": 5,
+    "username": "elle@griffith.au",
+    "userrole": "User",
+    "usergroup": 2
+},
+{
+    "userid": 6,
     "username": "jess@griffith.au",
-    "userrole": "Giliam",
+    "userrole": "User",
     "usergroup": 2
 }]

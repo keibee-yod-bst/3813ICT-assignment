@@ -1,0 +1,14 @@
+[{
+    "name": "1",
+    "channels": ["Channel1", "Channel2"],
+    "users": ["yoda@griffith.au", "buster@griffith.au", "porthus@griffith.au"]
+},{
+    "name": "2",
+    "channels": "Channel3",
+    "users": ["elle@griffith.au", "jess@griffith.au"]
+},{
+    "name": "3",
+    "channels": "Channel4",
+    "users": "porthus@griffith.au"
+}]
+  
