@@ -2,6 +2,8 @@
 
 This project is a real-time text/video chat system built using the MEAN stack (MongoDB, Express, Angular, Node.js) along with Socket.IO and Peer.js for real-time communication and video chat.
 This project is updated weekly and testing in two phases.
+- Phase 1: Launching the project, Planning, Frontend and Backend with local storage
+- Phase 2: MongoDB, Sockets, Image and Video support
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.4.
 
 ## Features
