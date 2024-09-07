@@ -41,13 +41,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Server Routes
 ------------ | -------------
 - **POST /login**: | User login.
------------- | -------------
 - **POST /register**: | User registration (Super Admin).
------------- | -------------
 - **POST /group**: | Create a new group (Group Admin).
------------- | -------------
 - **POST /channel**: | Create a new channel within a group.
------------- | -------------
 - **GET /chat/:channelId**: | Get chat history for a channel.
 ------------ | -------------
 
