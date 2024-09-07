@@ -2,7 +2,7 @@ const PORT = 8080;
 // elf port 8888 or 8080, http server and 3000 and 3001 for https
 const express = require('express');
 const app = express();
-const http = resuire('http').Server(app);
+const http = require('http').Server(app);
 
 app.use(express.urlencoded({
     extend: true
