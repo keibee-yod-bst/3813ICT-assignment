@@ -1,6 +1,11 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Component({
   selector: 'app-login',
@@ -9,11 +14,14 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
+
+const BACKEND_URL = "http://s5270448.elf.ict.griffithuni.edu.au:8080";
+
 export class LoginComponent {
-  name = "";
-  username =  "";
+  email =  "";
   password = "";
 
+  /*
   users = [
     { name: "Yoda", username: "yoda@griffith.au", password: "yoda413" },
     { name: "Buster", username: "buster@griffith.au", password: "buster816" },
@@ -21,9 +29,19 @@ export class LoginComponent {
     { name: "Elle", username: "elle@griffith.au", password: "elle424" },
     { name: "Jess", username: "jess@griffith.au", password: "jess925" }
   ];
+  */
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private httpClient: HttpClient) { };
+  submit(){
+    let user = {username: this.email, pwd: this.password};
+    this.httpClient.post(BACKEND_URL + '/login', user, httpOptions)
+    .subscribe((data:any)=>{
+      alert("posting: "+JSON.stringify(user));
+      alert("posting: "+JSON.stringify(data));
+    })
+  }
 
+  /*
   itemClicked() {
     console.log(this.name, this.username, this.password);
   
@@ -43,4 +61,5 @@ export class LoginComponent {
       alert("Invalid username or password. Please try again.");
     }
   }
+  */
 }
