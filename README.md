@@ -1,6 +1,7 @@
 # Chat System (Text/Video) with MEAN Stack
 
 This project is a real-time text/video chat system built using the MEAN stack (MongoDB, Express, Angular, Node.js) along with Socket.IO and Peer.js for real-time communication and video chat.
+This project is updated weekly and testing in two phases.
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.4.
 
 ## Features
@@ -39,13 +40,11 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - **Peer.js**: Provides video chat functionality.
 
 ## Server Routes
------------- | -------------
-- **POST /login**: | User login.
-- **POST /register**: | User registration (Super Admin).
-- **POST /group**: | Create a new group (Group Admin).
-- **POST /channel**: | Create a new channel within a group.
-- **GET /chat/:channelId**: | Get chat history for a channel.
------------- | -------------
+- **POST /login**: User login.
+- **POST /register**: User registration (Super Admin).
+- **POST /group**: Create a new group (Group Admin).
+- **POST /channel**: Create a new channel within a group.
+- **GET /chat/:channelId**: Get chat history for a channel.
 
 ## Setup Instructions
 
