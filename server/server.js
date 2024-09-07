@@ -2,6 +2,9 @@ const PORT = 8080;
 // elf port 8888 or 8080, http server and 3000 and 3001 for https
 const express = require('express');
 const app = express();
+const cors = require('cors');
+app.use(cors());
+
 const http = require('http').Server(app);
 
 app.use(express.urlencoded({
@@ -12,11 +15,12 @@ app.use(express.urlencoded({
   app.post('/login', require('./router/postLogin'));
   app.post('/loginafter', require('./router/postLoginAfter'));
 
-
+/*
   app.use(express.static(__dirname + '/www'));
   app.get('/test', function(req,res) {
     res.sendFile(__dirname + '/www/test.html');
   });
+  */
 
   http.listen(PORT,
     () => {

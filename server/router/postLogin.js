@@ -3,7 +3,7 @@ var fs = require('fs');
 module.exports = function(req, res) {
     var u = req.body.username;
     var p = req.body.password;
-    var c = u + p;
+    c = u + p;
     console.log(c);
     fs.readFile('./data/users.json', 'utf8', function(err, data) {
         if (err) throw err;

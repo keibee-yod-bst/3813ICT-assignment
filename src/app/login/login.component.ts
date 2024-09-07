@@ -7,6 +7,8 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+const BACKEND_URL = "http://s5270448.elf.ict.griffith.edu.au:8080";
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -15,7 +17,6 @@ const httpOptions = {
   styleUrl: './login.component.css'
 })
 
-const BACKEND_URL = "http://s5270448.elf.ict.griffithuni.edu.au:8080";
 
 export class LoginComponent {
   email =  "";
@@ -38,6 +39,16 @@ export class LoginComponent {
     .subscribe((data:any)=>{
       alert("posting: "+JSON.stringify(user));
       alert("posting: "+JSON.stringify(data));
+      if (data.ok){
+        alert('correct');
+        sessionStorage.setItem('userid', data.userid.toString());
+        sessionStorage.setItem('userlogin', data.ok.toString());
+        sessionStorage.setItem('username', data.username);
+        sessionStorage.setItem('userbirthdate', data.userbirthdate);
+        sessionStorage.setItem('userage', data.userage.toString());
+        this.router.navigateByUrl('/account');
+      }
+      else {alert("Invalid username or password. Please try again.");}
     })
   }
 
