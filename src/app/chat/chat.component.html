@@ -1,1 +1,22 @@
-<p>chat works!</p>
+<!-- src/app/chat/chat.component.html -->
+<button (click)="callPeer(otherPeerId)" [disabled]="!otherPeerId">Call</button>
+<div class="chat-container">
+    <!-- Existing chat messages -->
+    <div class="messages">
+      <div *ngFor="let message of messages">
+        {{ message }}
+      </div>
+    </div>
+  
+    <!-- Message input -->
+    <input type="text" [(ngModel)]="messageInput" placeholder="Type a message..." />
+    <button (click)="sendMessage()">Send</button>
+  
+    <!-- Video element for video chat -->
+    <video #myVideo autoplay playsinline></video>
+  
+    <!-- Button to initiate a call -->
+    <!-- You need to provide a way to input or select the peerId of the person you want to call -->
+    <button (click)="callPeer(otherPeerId)">Call</button>
+  </div>
+  

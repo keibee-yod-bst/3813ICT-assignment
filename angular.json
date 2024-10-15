@@ -11,11 +11,11 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/assignment",
             "index": "src/index.html",
-            "browser": "src/main.ts",
+            "main": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -23,7 +23,8 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "public",
+                "output": "assets"
               }
             ],
             "styles": [
@@ -45,12 +46,16 @@
                   "maximumError": "4kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "optimization": true,
+              "sourceMap": false,
+              "extractLicenses": true
             },
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "outputHashing": "none"
             }
           },
           "defaultConfiguration": "production"
@@ -58,17 +63,16 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-	  
-            "host":"s5270448.elf.ict.griffith.edu.au",
-            "port": 8080
-            
-        },
+            "host": "s5270448.elf.ict.griffith.edu.au",
+            "port": 8080,
+            "browserTarget": "assignment:build"
+          },
           "configurations": {
             "production": {
-              "buildTarget": "assignment:build:production"
+              "browserTarget": "assignment:build:production"
             },
             "development": {
-              "buildTarget": "assignment:build:development"
+              "browserTarget": "assignment:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -87,7 +91,8 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "public",
+                "output": "assets" 
               }
             ],
             "styles": [

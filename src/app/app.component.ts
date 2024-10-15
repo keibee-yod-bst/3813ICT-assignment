@@ -10,7 +10,7 @@ import { ProfileComponent } from './profile/profile.component';
   standalone: true,
   imports: [RouterOutlet, LoginComponent, AccountComponent, ProfileComponent, RouterLink],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'] // Corrected property name and type
 })
 export class AppComponent {
   title = 'assignment';

@@ -1,33 +1,24 @@
-var fs = require('fs');
+// server/router/postLogin.js
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+
+const secretKey = 'your_secret_key'; // Use environment variables in production
 
 module.exports = function(req, res) {
-    var u = req.body.username;
-    var p = req.body.password;
-    c = u + p;
-    console.log(c);
-    fs.readFile('./data/users.json', 'utf8', function(err, data) {
-        if (err) throw err;
-        let userArray = JSON.parse(data);
-        console.log(userArray);
-        let i = userArray.findIndex(user =>
-            ((user.username == u) && (user.password == p)));
-        
-        if (i == -1) {
-            res.send({
-                "ok": false
-            });
-        } else {
-            fs.readFile('./data/users.json', 'utf8', function(err, data) {
-                if (err) throw err;
-                let extendedUserArray = JSON.parse(data);
+  const { username, password } = req.body;
 
-                let i = extendedUserArray.findIndex(user =>
-                    ((user.username == u)));
-                let userData = extendedUserArray[i];
-                userData["ok"] = true;
-                console.log(userData);
-                res.send(userData);
-            })
-        }
-    });
-}
+  User.findOne({ username })
+    .then(user => {
+      if (!user) return res.json({ ok: false, error: 'User not found' });
+
+      bcrypt.compare(password, user.password)
+        .then(match => {
+          if (!match) return res.json({ ok: false, error: 'Invalid password' });
+
+          const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h' });
+          res.json({ ok: true, token, user });
+        });
+    })
+    .catch(err => res.status(500).json({ ok: false, error: err.message }));
+};

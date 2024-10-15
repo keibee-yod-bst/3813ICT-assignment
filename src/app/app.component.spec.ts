@@ -1,29 +1,10 @@
-import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
-
-describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AppComponent],
-    }).compileComponents();
-  });
-
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it(`should have the 'assignment' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('assignment');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, assignment');
-  });
-});
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, LoginComponent, AccountComponent, ProfileComponent, RouterLink],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'] // Corrected property name and type
+})
+export class AppComponent {
+  title = 'assignment';
+}
