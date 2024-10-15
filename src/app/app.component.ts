@@ -4,6 +4,7 @@ import { RouterOutlet, RouterLink} from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account/account.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',

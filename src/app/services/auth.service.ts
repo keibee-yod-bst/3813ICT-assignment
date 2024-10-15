@@ -1,8 +1,10 @@
-// src/app/services/auth.service.ts
+// auth.service.ts
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
+const BACKEND_URL = 'http://localhost:3000'; // Adjust as necessary
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +14,7 @@ export class AuthService {
 
   // Login method
   login(username: string, password: string): Observable<any> {
-    const url = '/api/login'; // Adjust the URL as needed
+    const url = `${BACKEND_URL}/login`; // Use the correct backend URL
     const body = { username, password };
     return this.httpClient.post(url, body);
   }

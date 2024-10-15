@@ -7,7 +7,7 @@ import { ChatService } from '../services/chat.service';
   selector: 'app-chat',
   standalone: true,
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  
 })
 export class ChatComponent implements OnInit {
   messages: string[] = [];
@@ -48,10 +48,10 @@ export class ChatComponent implements OnInit {
 
   initializePeer() {
     this.peer = new Peer({
-      host: 's5270448.elf.ict.griffith.edu.au',
-      port: 8080,
+      host: 'localhost',
+      port: 3000, // Or the port where your PeerJS server is running
       path: '/peerjs'
-    });
+    });    
   
     this.peer.on('open', (id: string) => {
       this.peerId = id;

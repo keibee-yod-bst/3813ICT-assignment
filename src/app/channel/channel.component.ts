@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './channel.component.html',
-  styleUrl: './channel.component.css'
+  styleUrls: ['./channel.component.css']
 })
 export class ChannelComponent {
 

@@ -26,7 +26,7 @@ const peerServer = ExpressPeerServer(http, {
 });
 
 app.use(express.urlencoded({
-    extend: true
+    extended: true
   }));
   app.use(express.json());
 
@@ -60,24 +60,8 @@ app.use(express.urlencoded({
     });
   });  
 
-/*
-  app.use(express.static(__dirname + '/www'));
-  app.get('/test', function(req,res) {
-    res.sendFile(__dirname + '/www/test.html');
-  });
-  */
-
   http.listen(PORT,
     () => {
         console.log('Server listening on:' + PORT);
     }
   );
-/*
-  console.log(__dirname);
-  require('./routes/check.js').routeFunc(app);
-  
-  HTMLOutputElement.listen(PORT,
-    () => {
-      console.log("Server listening on:" + PORT);
-    });
-*/

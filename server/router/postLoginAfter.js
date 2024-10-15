@@ -27,8 +27,8 @@ module.exports = function(req, res) {
         res.send(uArray);
 
         let uArrayjson = JSON.stringify(uArray);
-        fs.writeFile('./data/extendedUsers.json', uArray, 'utf8', function(err){
+        fs.writeFile('./data/extendedUsers.json', JSON.stringify(uArray, null, 2), 'utf8', function(err){
             if (err) throw err;
-        });
+        });        
     });
 }

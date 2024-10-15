@@ -63,7 +63,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "host": "s5270448.elf.ict.griffith.edu.au",
+            "host": "localhost",
             "port": 8080,
             "browserTarget": "assignment:build"
           },
@@ -92,7 +92,7 @@
               {
                 "glob": "**/*",
                 "input": "public",
-                "output": "assets" 
+                "output": "assets"
               }
             ],
             "styles": [

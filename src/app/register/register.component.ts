@@ -1,35 +1,41 @@
-// src/app/register/register.component.ts
+// register.component.ts
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
-const BACKEND_URL = "http://s5270448.elf.ict.griffith.edu.au:8080";
+const BACKEND_URL = 'http://localhost:3000'; // Adjust as necessary
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-  username = '';
-  email = '';
-  password = '';
+  user = {
+    username: '',
+    password: '',
+  };
 
   constructor(private router: Router, private httpClient: HttpClient) {}
 
-  register() {
-    const user = { username: this.username, email: this.email, password: this.password };
-    this.httpClient.post(BACKEND_URL + '/register', user)
-      .subscribe((data: any) => {
+  onSubmit() {
+    this.httpClient.post(BACKEND_URL + '/register', this.user).subscribe(
+      (data: any) => {
         if (data.ok) {
           alert('Registration successful!');
           this.router.navigateByUrl('/login');
         } else {
-          alert(data.error);
+          alert('Registration failed: ' + data.error);
         }
-      });
+      },
+      (error) => {
+        console.error('Registration error:', error);
+        alert('An error occurred during registration.');
+      }
+    );
   }
 }

@@ -1,4 +1,4 @@
-// src/app/login/login.component.ts
+// login.component.ts
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,8 +12,8 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  username = '';
-  password = '';
+  username: string = '';
+  password: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -25,12 +25,20 @@ export class LoginComponent {
           this.authService.setUser(data.user);
           this.router.navigateByUrl('/account');
         } else {
-          alert(data.error);
+          alert(data.error || 'An unknown error occurred');
         }
       },
       (error) => {
-        alert('Login failed: ' + error.error.message);
+        console.error('Login error response:', error);
+        alert(
+          'Login failed: ' +
+            (error.error?.error || 'No error message returned from server')
+        );
       }
     );
+  }
+
+  goToRegister() {
+    this.router.navigateByUrl('/register');
   }
 }
