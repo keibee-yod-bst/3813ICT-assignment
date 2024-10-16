@@ -114,7 +114,10 @@ Uploaded images are stored in the /uploads directory, and their paths are saved 
 Video Chat with PeerJS
 PeerJS enables video chat between users in the same channel.
 PeerJS server is configured to handle WebRTC connections.
-API Routes
+
+---
+
+## API Routes
 Route	Method	Description
 /register	POST	Register a new user
 /login	POST	User login
