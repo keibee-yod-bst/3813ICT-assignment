@@ -44,11 +44,11 @@ export class ChatService {
   }
 
   // Handle when a user joins a channel
-  onUserJoined(callback: (message: string) => void) {
-    this.socket.on('userJoined', (message: string) => {
-      callback(message);
+  onUserJoined(callback: (user: { username: string; peerId?: string }) => void) {
+    this.socket.on('userJoined', (user: { username: string; peerId?: string }) => {
+      callback(user);
     });
-  }
+  }  
 
   // Handle when a user leaves a channel
   onUserLeft(callback: (message: string) => void) {

@@ -26,10 +26,7 @@ const authMiddleware = require('./middleware/auth');
 
 // Connect to MongoDB
 mongoose
-  .connect('mongodb://localhost:27017/chatapp', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect('mongodb://localhost:27017/chatapp', {})
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
@@ -54,14 +51,16 @@ app.post(
 io.on('connection', (socket) => {
   console.log('A user connected.');
 
-  // Handle channel join and send chat history
   socket.on('joinChannel', async ({ channelId, username }) => {
-    socket.join(channelId);
-    io.to(channelId).emit('userJoined', `${username} joined the channel.`);
-
     try {
+      socket.join(channelId);
+      const user = { username, peerId: socket.id };
+      io.to(channelId).emit('userJoined', user);
+
       // Retrieve chat history from MongoDB
-      const chatHistory = await Message.find({ channelId }).sort({ timestamp: 1 }).lean();
+      const chatHistory = await Message.find({ channelId })
+        .sort({ timestamp: 1 })
+        .lean();
       socket.emit('chatHistory', chatHistory); // Send chat history to the user
     } catch (error) {
       console.error('Error retrieving chat history:', error);
@@ -74,7 +73,11 @@ io.on('connection', (socket) => {
 
     try {
       await newMessage.save(); // Save message to MongoDB
-      io.to(channelId).emit('chatMessage', { username, message, timestamp: newMessage.timestamp });
+      io.to(channelId).emit('chatMessage', {
+        username,
+        message,
+        timestamp: newMessage.timestamp,
+      });
     } catch (error) {
       console.error('Error saving message:', error);
     }

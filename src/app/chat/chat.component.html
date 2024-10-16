@@ -1,19 +1,16 @@
 <!-- src/app/chat/chat.component.html -->
 <div class="chat-container">
-  <!-- Chat Box for displaying messages -->
+  <!-- Chat Box -->
   <div #chatBox class="chat-box">
-    <!-- Display system messages (e.g., user joined/left notifications) -->
     <div *ngFor="let msg of systemMessages" class="system-message">
       {{ msg }}
     </div>
-
-    <!-- Display chat messages with username -->
     <div *ngFor="let msg of messages" class="chat-message">
       <strong>{{ msg.username }}:</strong> {{ msg.message }}
     </div>
   </div>
 
-  <!-- Chat Input and Send Button -->
+  <!-- Chat Input -->
   <div class="chat-input">
     <input
       type="text"
@@ -24,9 +21,19 @@
     <button (click)="sendMessage()">Send</button>
   </div>
 
-  <!-- Video Chat Section -->
-  <div class="video-chat">
-    <video #myVideo autoplay muted></video> <!-- Video stream -->
-    <button (click)="callPeer()">Call</button> <!-- Call button -->
+  <!-- User List -->
+  <div class="user-list">
+    <h3>Online Users</h3>
+    <ul>
+      <li *ngFor="let user of onlineUsers">
+        {{ user.username }}
+        <button (click)="callUser(user)">Video Call</button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Caller Video Chat -->
+  <div class="caller-video">
+    <video #myVideo autoplay muted></video> <!-- Video of the calling user -->
   </div>
 </div>
