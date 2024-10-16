@@ -51,3 +51,15 @@ This chat application allows users to:
 ```bash
 git clone https://github.com/keibee-yod-bst/s5270448-2024-3813ICT-Assignment
 cd src/app
+
+# Chat Application with Video, Image Upload, and MongoDB Support
+
+## Backend Setup:
+### Install dependencies:
+```bash
+cd server
+npm install
+
+
+Start MongoDB:
+mongod --dbpath=/your/db/path
