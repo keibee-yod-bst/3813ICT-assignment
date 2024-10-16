@@ -1,9 +1,3 @@
-# Chat Application with Video, Image Upload, and MongoDB Support
-3813ICT Software Frameworks	s5270448 Kei Giliam
-
-# Create a README.md file with the full content in markdown format
-
-content = """
 # Chat Application with Video, Image Upload, and MongoDB Support  
 **3813ICT Software Frameworks**  
 **s5270448 Kei Giliam**
