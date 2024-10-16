@@ -2,10 +2,10 @@
 import { Injectable } from '@angular/core';
 import { io } from 'socket.io-client';
 
-const SOCKET_ENDPOINT = 'http://s5270448.elf.ict.griffith.edu.au:8080';
+const SOCKET_ENDPOINT = 'http://localhost:3000'; // Adjust as needed
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChatService {
   socket: any;
@@ -23,17 +23,17 @@ export class ChatService {
   }
 
   receiveMessage(callback: (message: string) => void) {
-    this.socket.on('chatMessage', (message: string) => {
-      callback(message);
+    this.socket.on('chatMessage', (data: any) => {
+      callback(data.message);
     });
   }
 
-  // New method to share peerId
+  // Method to share peerId
   sharePeerId(channelId: string, peerId: string) {
     this.socket.emit('sharePeerId', { channelId, peerId });
   }
 
-  // New method to receive peerIds from others
+  // Method to receive peerIds from others
   receivePeerId(callback: (peerId: string) => void) {
     this.socket.on('sharePeerId', (data: { peerId: string }) => {
       callback(data.peerId);

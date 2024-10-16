@@ -1,14 +1,14 @@
-ID: <br>
-<input type="number" [(ngModel)]="userid">
-<br>
-Username by email: <br>
-<input type="email" [(ngModel)]="username">
-<br>
-Role: <br>
-<input type="text" [(ngModel)]="userrole">
-<br>
-Group: <br>
-<input type="number" [(ngModel)]="usergroup">
-<br>
+ID: <br />
+<input type="text" [(ngModel)]="userid" readonly />
+<br />
+Username by email: <br />
+<input type="email" [(ngModel)]="username" required />
+<br />
+Role: <br />
+<input type="text" [(ngModel)]="userrole" required />
+<br />
+Group: <br />
+<input type="text" [(ngModel)]="usergroup" />
+<br />
 
-<button class="log_but" id="submit"(click)="editFunc()">Submit</button>
+<button class="log_but" id="submit" (click)="editFunc()">Submit</button>

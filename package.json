@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "^16.2.12",
     "@angular/router": "^16.2.12",
     "bootstrap": "^5.3.3",
+    "cors": "^2.8.5",
     "peerjs": "^1.5.4",
     "rxjs": "~7.8.0",
     "socket.io-client": "^4.8.0",
