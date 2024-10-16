@@ -1,7 +1,22 @@
-<!-- src/app/channel/channel.component.html -->
-<h1>Channels</h1>
-<ul>
-  <li *ngFor="let channel of channels">
-    <a [routerLink]="['/channels', channel.id]">{{ channel.name }}</a>
-  </li>
-</ul>
+<div class="channel-container">
+    <div class="header">
+      <h1>Available Channels</h1>
+    </div>
+  
+    <div class="channel-list">
+      <ul>
+        <li *ngFor="let channel of channels" (click)="goToChannel(channel.id)">
+          <div class="channel-card">
+            <div class="channel-icon">
+              <img src="assets/channel-icon.png" alt="Channel Icon" />
+            </div>
+            <div class="channel-info">
+              <h3>{{ channel.name }}</h3>
+              <span>Join the conversation in the {{ channel.name }} channel</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  

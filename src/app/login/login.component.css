@@ -1,0 +1,98 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: #f4f6f8;
+  }
+  
+  /* Login Container */
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #4b79a1, #283e51);
+  }
+  
+  /* Login Box */
+  .login-box {
+    width: 360px;
+    padding: 40px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  /* Heading */
+  .login-box h2 {
+    margin: 0 0 20px;
+    color: #333;
+    font-weight: 700;
+    font-size: 24px;
+  }
+  
+  /* Input Group */
+  .input-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .input-group input:focus {
+    border-color: #4b79a1;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  /* Action Group */
+  .action-group {
+    margin-top: 20px;
+  }
+  
+  .login-button {
+    width: 100%;
+    padding: 15px;
+    background: #4b79a1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .login-button:hover {
+    background-color: #3a5677;
+  }
+  
+  /* Footer */
+  .footer {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #777;
+  }
+  
+  .footer a {
+    color: #4b79a1;
+    text-decoration: none;
+  }
+  
+  .footer a:hover {
+    text-decoration: underline;
+  }
+  

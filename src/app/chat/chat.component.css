@@ -1,93 +1,161 @@
-/* src/app/chat/chat.component.css */
+/* General Styling */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+}
 
-/* Container for the entire chat interface */
+/* Chat Container */
 .chat-container {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    position: relative;
-  }
-  
-  /* Chat box to hold messages */
-  .chat-box {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    width: 80%;
+    max-width: 1200px;
+    overflow: hidden;
+}
+
+/* Chat Box */
+.chat-box {
     flex: 1;
+    padding: 20px;
     overflow-y: auto;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  /* Input section styling */
-  .chat-input {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.chat-message {
+    margin-bottom: 15px;
+}
+
+.chat-message strong {
+    color: #4a90e2;
+    font-weight: bold;
+}
+
+.system-message {
+    text-align: center;
+    font-style: italic;
+    color: #888;
+}
+
+/* Chat Input */
+.chat-input {
     display: flex;
-    padding: 10px;
-    border-top: 1px solid #ddd;
-  }
-  
-  .chat-input input {
+    padding: 15px;
+    border-top: 1px solid #e0e0e0;
+    background-color: #fafafa;
+}
+
+.chat-input input[type="text"] {
     flex: 1;
-    padding: 8px;
-    margin-right: 5px;
-  }
-  
-  /* User list section */
-  .user-list {
     padding: 10px;
-    border-top: 1px solid #ddd;
-  }
-  
-  .user-list ul {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    font-size: 16px;
+    outline: none;
+}
+
+.chat-input button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #4a90e2;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.chat-input button:hover {
+    background-color: #357ab7;
+}
+
+.chat-input input[type="file"] {
+    margin-left: 10px;
+}
+
+/* User List */
+.user-list {
+    padding: 15px;
+    background-color: #fafafa;
+    border-top: 1px solid #e0e0e0;
+}
+
+.user-list h3 {
+    margin-bottom: 10px;
+    color: #4a90e2;
+}
+
+.user-list ul {
     list-style: none;
     padding: 0;
-  }
-  
-  /* Position the caller video at the bottom right */
-  .caller-video {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    width: 200px;
-    height: 150px;
-    overflow: hidden;
-    border: 1px solid #ccc;
+}
+
+.user-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 2px solid #ccc;
+}
+
+.user-list button {
+    margin-left: auto;
+    padding: 8px 15px;
+    border: none;
     border-radius: 8px;
+    background-color: #4a90e2;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.user-list button:hover {
+    background-color: #357ab7;
+}
+
+/* Caller Video */
+.caller-video {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    width: 250px;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 2px solid #e0e0e0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #000;
     z-index: 100;
-  }
-  
-  /* Styling for the video element */
-  .caller-video video {
+}
+
+.caller-video video {
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-  
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .chat-image {
-    max-width: 200px;
+}
+
+/* Chat Image Styling */
+.chat-image {
+    max-width: 250px;
     border-radius: 10px;
-    margin-top: 5px;
-  }
-  
-  .caller-video video {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    width: 200px;
-    height: 150px;
-    border-radius: 10px;
-  }
-  
-  .user-avatar {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%; /* Makes it circular */
-    object-fit: cover; /* Ensures the image fills the space without distortion */
-    margin-right: 10px;
-    border: 2px solid #ccc; /* Optional: border around avatar */
-  }
-  
+    margin-top: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+.profile-upload {
+    margin-top: 15px;
+    text-align: center;
+}

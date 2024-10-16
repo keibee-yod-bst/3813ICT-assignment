@@ -1,4 +1,3 @@
-<!-- src/app/chat/chat.component.html -->
 <div class="chat-container">
   <!-- Chat Box -->
   <div #chatBox class="chat-box">
@@ -18,7 +17,12 @@
 
   <!-- Chat Input -->
   <div class="chat-input">
-    <input type="text" [(ngModel)]="messageInput" placeholder="Type your message..." (keyup.enter)="sendMessage()" />
+    <input
+      type="text"
+      [(ngModel)]="messageInput"
+      placeholder="Type your message..."
+      (keyup.enter)="sendMessage()"
+    />
     <button (click)="sendMessage()">Send</button>
     <input type="file" (change)="uploadImage($event)" />
   </div>
@@ -28,16 +32,15 @@
     <h3>Online Users</h3>
     <ul>
       <li *ngFor="let user of onlineUsers">
-        <img 
-          [src]="user.profileImage ? 'http://localhost:3000' + user.profileImage : 'http://localhost:3000/uploads/default-avatar.png'" 
-          alt="Avatar" 
+        <img
+          [src]="user.profileImage ? 'http://localhost:3000' + user.profileImage : 'http://localhost:3000/uploads/default-avatar.png'"
+          alt="Avatar"
           class="user-avatar"
         />
         {{ user.username }}
         <button (click)="callUser(user)">Video Call</button>
       </li>
     </ul>
-    
   </div>
 
   <!-- Caller Video Chat -->
