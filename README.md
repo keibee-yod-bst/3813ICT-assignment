@@ -7,25 +7,8 @@ This is a real-time chat application developed as part of the 3813ICT Assignment
 
 ---
 
-## Table of Contents
-- [Introduction](#introduction)
-- [Technologies Used](#technologies-used)
-- [Setup and Installation](#setup-and-installation)
-- [Project Structure](#project-structure)
-- [Features](#features)
-  - [MongoDB Integration](#mongodb-integration)
-  - [Sockets for Real-time Messaging](#sockets-for-real-time-messaging)
-  - [Image Upload](#image-upload)
-  - [Video Chat with PeerJS](#video-chat-with-peerjs)
-- [API Routes](#api-routes)
-- [Testing](#testing)
-- [Git Usage](#git-usage)
-- [Conclusion](#conclusion)
-
----
-
 ## Introduction
-This project demonstrates a chat system with advanced features such as real-time messaging using **WebSockets**, **video chat** using **PeerJS**, **image uploads**, and **MongoDB** integration for persistent data storage. 
+This project demonstrates a chat system with advanced features such as real-time messaging using **WebSockets**, **video chat** using **PeerJS**, **image uploads**, and **MongoDB** integration for persistent data storage.
 
 This chat application allows users to:
 - Register, log in, and update profile pictures.
@@ -34,143 +17,195 @@ This chat application allows users to:
 
 ---
 
-## Technologies Used
-- **Angular** (Frontend)
-- **Node.js** with **Express** (Backend)
-- **MongoDB** (Database)
-- **Socket.IO** (Real-time communication)
-- **PeerJS** (Video chat functionality)
-- **Cypress** and **Jest** (Testing)
-- **GitHub** (Version control)
+## Git Usage & Structure
+- **Repository Structure**:
+  - The repository is divided into client-side (Angular) and server-side (Node.js) codebases.
+  - Frequent commits reflect new features and bug fixes, tracked via branches (e.g., `feature/chat`, `feature/video-call`).
+  - Pull requests and merging strategies are used for integrating features.
+  - A `README.md` provides project installation instructions.
+  - GitHub is used to collaborate and keep version control organized.
 
 ---
 
-## Setup and Installation
+## Data Structures
 
-### 1. Clone the repository
-```bash
-git clone https://github.com/keibee-yod-bst/s5270448-2024-3813ICT-Assignment
-cd chat-app
+### 1. Users Collection:
+```json
+{
+  "_id": "abc123",
+  "username": "User1",
+  "password": "hashed_password",
+  "groups": ["general", "random"],
+  "profileImage": "/uploads/profile1.jpg"
+}
 ```
 
-### 2. Backend Setup
-Install dependencies:
-```bash
-cd server
-npm install
+### 2. Groups Collection:
+```json
+{
+  "_id": "group1",
+  "name": "General",
+  "channels": ["general-chat", "random-chat"]
+}
 ```
 
-Start the MongoDB server:
-```bash
-mongod --dbpath=/your/db/path
+### 3. Channels Collection:
+```json
+{
+  "_id": "general-chat",
+  "name": "General Chat",
+  "group": "group1",
+  "messages": []
+}
 ```
 
-Start the Node server:
-```bash
-node server.js
-```
-
-### 3. Frontend Setup
-Install dependencies:
-```bash
-cd client
-npm install
-```
-
-Start the Angular development server:
-```bash
-ng serve --open
-```
-
----
-
-## Project Structure
-```
-/chat-app
-│
-├── /client (Angular Frontend)
-│   ├── /src
-│   │   ├── app
-│   │   │   ├── chat
-│   │   │   ├── login
-│   │   │   ├── register
-│   │   │   ├── profile
-│   │   │   ├── channel
-│   │   │   └── services
-│   │   └── assets
-│   └── README.md
-│
-├── /server (Node.js Backend)
-│   ├── /routes
-│   ├── /uploads (Image uploads directory)
-│   ├── /models (Mongoose models)
-│   ├── server.js
-│   └── README.md
-│
-└── README.md
+### 4. Messages Collection:
+```json
+{
+  "_id": "msg123",
+  "username": "User1",
+  "message": "Hello, world!",
+  "timestamp": "2024-10-17T00:00:00Z",
+  "isImage": false
+}
 ```
 
 ---
 
-## Features
+## Client-Server Responsibility Breakdown
 
-### MongoDB Integration
-- Users, channels, and messages are stored in a MongoDB database.
-- Mongoose models are used to structure data for MongoDB.
+### Client (Angular):
+- Components handle the user interface and interactions.
+- Services interact with the backend API and handle real-time socket connections.
+- Image uploads and chat messages are handled through HTTP requests to the server.
+- PeerJS is used on the client-side for initiating and receiving video calls.
 
-### Sockets for Real-time Messaging
-- Socket.IO allows real-time updates when users join, leave, or send messages in channels.
-- Messages are broadcast instantly to all connected users.
-
-### Image Upload
-- Users can upload images in chat messages or set profile avatars.
-- Uploaded images are stored in the `/uploads` directory, and their paths are saved in MongoDB.
-
-### Video Chat with PeerJS
-- PeerJS enables video chat between users in the same channel.
-- A PeerJS server is configured to handle WebRTC connections.
+### Server (Node.js with MongoDB):
+- The backend stores user, group, channel, and message data in MongoDB collections.
+- Routes are exposed as REST APIs to manage users, channels, and groups.
+- Sockets are used to support real-time chat and notifications.
+- PeerJS server manages video call signaling.
 
 ---
 
-## API Routes
+## Routes & APIs
 
-| Route                     | Method | Description                    |
-|---------------------------|--------|--------------------------------|
-| `/register`               | POST   | Register a new user            |
-| `/login`                  | POST   | User login                     |
-| `/upload-chat-image`      | POST   | Upload a chat image            |
-| `/profile/upload-avatar`  | POST   | Upload or update avatar        |
-| `/channels/:id`           | GET    | Fetch chat history for a channel |
+| Route                   | Method | Parameters                | Description                         |
+|-------------------------|--------|---------------------------|-------------------------------------|
+| /register               | POST   | { username, password }    | Register a new user.               |
+| /login                  | POST   | { username, password }    | Login and generate a token.        |
+| /channels               | GET    | None                      | Retrieve all channels.             |
+| /channels/:id/messages  | GET    | { id }                    | Get all messages from a channel.   |
+| /upload-profile         | POST   | FormData with profile image | Upload a user's profile image.   |
+| /upload-chat-image      | POST   | FormData with chat image  | Upload a chat image as a message.  |
+
+---
+
+## Angular Architecture
+
+1. **Components**:
+   - `LoginComponent`: Handles user login.
+   - `RegisterComponent`: Handles new user registration.
+   - `ChatComponent`: Manages chat, video, and image interactions.
+   - `ChannelComponent`: Displays the available channels.
+   - `ProfileComponent`: Allows users to update their profile.
+
+2. **Services**:
+   - `AuthService`: Manages authentication and token storage.
+   - `ChatService`: Handles socket communication and API interactions.
+
+---
+
+## Real-time Interaction with Sockets
+- **Socket.IO** is used to manage real-time chat.
+- When a user joins a channel, a notification is sent to other users in the channel.
+- As new messages arrive, the chat history is instantly updated via sockets.
+- When a user leaves, their status is updated in real-time.
+
+---
+
+## PeerJS Video Chat Integration
+
+### 1. Client-side setup:
+- PeerJS is initialized in the `ChatComponent`.
+- Each user gets a unique peer ID upon connection, shared with others through the server.
+- Users can initiate a call by clicking on another user’s video call button.
+
+### 2. Server-side PeerJS Setup:
+```bash
+npx peerjs --port 8080
+```
+This server handles the signaling for Peer-to-Peer (P2P) connections.
+
+### 3. Functionality:
+- Once connected, both users can exchange video streams.
+- Video streams are displayed in the `caller-video` element in the chat interface.
+
+---
+
+## Image Uploads in Chat
+
+### 1. How it works:
+- Users can upload images as part of their chat messages.
+- The uploaded image files are stored on the server under the `/uploads` directory.
+
+### 2. Image Storage & Retrieval:
+- File paths (e.g., `/uploads/chat-image.jpg`) are stored in MongoDB.
+- When a user sends an image message, the image URL is sent to all users through the socket.
+
+### 3. Image Upload Example (ChatComponent):
+```typescript
+uploadImage(event: any) {
+  const file = event.target.files[0];
+  const formData = new FormData();
+  formData.append('chatImage', file);
+
+  this.chatService.uploadChatImage(formData).subscribe(
+    () => console.log('Image uploaded successfully'),
+    (error) => console.error('Failed to upload image:', error)
+  );
+}
+```
 
 ---
 
 ## Testing
 
-### Unit Tests (Jest)
-Jest is used for backend route testing.
+### 1. Backend Tests (Jest):
+- Unit tests are implemented to verify API routes and data storage.
 
-Example Jest test for `/login`:
+Example:
 ```javascript
-it('should return 200 for valid login', async () => {
-  const res = await request(app).post('/login').send({
-    username: 'user1',
-    password: 'pass123'
-  });
-  expect(res.statusCode).toEqual(200);
+test('POST /register creates a new user', async () => {
+  const res = await request(app).post('/register').send({ username: 'user', password: 'pass' });
+  expect(res.statusCode).toBe(200);
 });
 ```
 
-### E2E Tests (Cypress)
-Cypress is used for frontend interaction testing.
+### 2. Frontend Unit Tests (Karma):
+- Components are tested to ensure form validation and button states.
 
-Example Cypress test for the login page:
+Example:
+```typescript
+it('should disable the register button if form is invalid', () => {
+  component.user.username = '';
+  component.user.password = '';
+  fixture.detectChanges();
+  expect(fixture.nativeElement.querySelector('button').disabled).toBeTruthy();
+});
+```
+
+### 3. End-to-End Tests (Cypress):
+- Tests to verify user flows, such as login, registration, and chat.
+
+Example:
 ```javascript
 describe('Login Page', () => {
-  it('should allow a user to log in', () => {
+  it('should log the user in and redirect to profile', () => {
     cy.visit('/login');
-    cy.get('input[name="username"]').type('user1');
-    cy.get('input[name="password"]').type('pass123');
-    cy.get('button[type="submit"]').click();
+    cy.get('input[name="username"]').type('testuser');F
+    cy.get('input[name="password"]').type('password');
+    cy.get('button').click();
     cy.url().should('include', '/profile');
   });
 });
@@ -178,40 +213,13 @@ describe('Login Page', () => {
 
 ---
 
-## Git Usage
-
-Initialize Git repository:
-```bash
-git init
-```
-
-Commit frequently:
-```bash
-git add .
-git commit -m "Implemented basic chat feature"
-```
-
-Push to GitHub:
-```bash
-git remote add origin https://github.com/keibee-yod-bst/s5270448-2024-3813ICT-Assignment
-git push -u origin main
-```
-
-Use branches for new features:
-```bash
-git checkout -b feature/video-chat
-```
-
----
-
 ## Conclusion
-
 This chat application integrates:
 - **MongoDB** for persistent data storage (users, channels, and messages).
 - **Socket.IO** for real-time chat functionality.
 - **PeerJS** for video chat between users.
 - **Image uploads** for both profile pictures and chat messages.
-- **Comprehensive testing** through unit (Jest) and E2E (Cypress) tests.
+- **Comprehensive testing** through unit, backend, and E2E tests.
 - **Proper version control** using Git to track development progress.
 
 This project demonstrates the combination of real-time communication, multimedia support, and a scalable backend.
