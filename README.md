@@ -1,4 +1,5 @@
 # Chat Application with Video, Image Upload, and MongoDB Support
+3813ICT Software Frameworks	s5270448 Kei Giliam
 
 This is a real-time chat application developed as part of the 3813ICT Assignment Phase 2. It includes MongoDB integration, video chat with PeerJS, image uploads, and socket-based real-time messaging.
 
@@ -70,7 +71,10 @@ npm install
 Start the Angular development server:
 
 ng serve --open
-Project Structure
+
+---
+
+## Project Structure
 
 /chat-app
 │
@@ -94,7 +98,10 @@ Project Structure
 │   └── README.md
 │
 └── README.md
-Features
+
+---
+
+## Features
 MongoDB Integration
 Users, channels, and messages are stored in a MongoDB database.
 Mongoose models are used to structure data for MongoDB.
@@ -114,6 +121,9 @@ Route	Method	Description
 /upload-chat-image	POST	Upload a chat image
 /profile/upload-avatar	POST	Upload or update avatar
 /channels/:id	GET	Fetch chat history for a channel
+
+---
+
 ## Testing
 Unit Tests (Jest)
 Backend API routes are tested using Jest.
