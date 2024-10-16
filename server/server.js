@@ -182,3 +182,5 @@ peerApp.use('/peerjs', peerExpressServer);
 peerServer.listen(PEER_PORT, () => {
   console.log(`PeerJS server listening on port: ${PEER_PORT}`);
 });
+
+module.exports = server;

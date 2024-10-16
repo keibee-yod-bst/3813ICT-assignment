@@ -4,19 +4,23 @@ const User = require('../models/User');
 
 const secretKey = 'your_secret_key'; // Use environment variables in production
 
-module.exports.authenticateJWT = (req, res, next) => {
+module.exports.authenticateJWT = async (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) return res.sendStatus(401);
 
-  jwt.verify(token, secretKey, (err, decoded) => {
-    if (err) return res.sendStatus(403);
-    User.findById(decoded.userId)
-      .then(user => {
-        req.user = user;
-        next();
-      })
-      .catch(err => res.sendStatus(500));
-  });
+  try {
+    const decoded = jwt.verify(token, secretKey);
+    const user = await User.findById(decoded.userId);
+    if (!user) return res.sendStatus(401);
+    req.user = user;
+    next();
+  } catch (err) {
+    if (err.name === 'TokenExpiredError' || err.name === 'JsonWebTokenError') {
+      res.sendStatus(403);
+    } else {
+      res.sendStatus(500);
+    }
+  }
 };
 
 module.exports.authorizeRoles = (...allowedRoles) => {
