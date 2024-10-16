@@ -1,0 +1,40 @@
+/* src/app/chat/chat.component.css */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .chat-box {
+    flex-grow: 1;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .chat-message {
+    margin: 5px 0;
+  }
+  
+  .system-message {
+    color: gray;
+    font-style: italic;
+  }
+  
+  input {
+    width: 80%;
+    padding: 10px;
+    margin-right: 5px;
+  }
+  
+  button {
+    padding: 10px;
+  }
+  
+  .video-chat {
+    margin-top: 20px;
+  }
+  

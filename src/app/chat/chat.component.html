@@ -1,28 +1,32 @@
 <!-- src/app/chat/chat.component.html -->
-<div>
-  <h2>Chat - Channel {{ channelId }}</h2>
+<div class="chat-container">
+  <!-- Chat Box for displaying messages -->
+  <div #chatBox class="chat-box">
+    <!-- Display system messages (e.g., user joined/left notifications) -->
+    <div *ngFor="let msg of systemMessages" class="system-message">
+      {{ msg }}
+    </div>
 
-  <!-- Chat Messages -->
-  <div class="chat-messages">
-    <div *ngFor="let message of messages">
-      {{ message }}
+    <!-- Display chat messages with username -->
+    <div *ngFor="let msg of messages" class="chat-message">
+      <strong>{{ msg.username }}:</strong> {{ msg.message }}
     </div>
   </div>
 
-  <!-- Message Input -->
-  <input
-    type="text"
-    [(ngModel)]="messageInput"
-    (keyup.enter)="sendMessage()"
-    placeholder="Type your message"
-  />
-  <button (click)="sendMessage()">Send</button>
+  <!-- Chat Input and Send Button -->
+  <div class="chat-input">
+    <input
+      type="text"
+      [(ngModel)]="messageInput"
+      placeholder="Type your message..."
+      (keyup.enter)="sendMessage()"
+    />
+    <button (click)="sendMessage()">Send</button>
+  </div>
 
-  <!-- Video Element -->
-  <video #myVideo></video>
-
-  <!-- Button to Call Peer (if not auto-calling) -->
-  <button *ngIf="otherPeerId" (click)="callPeer(otherPeerId)">
-    Start Video Chat
-  </button>
+  <!-- Video Chat Section -->
+  <div class="video-chat">
+    <video #myVideo autoplay muted></video> <!-- Video stream -->
+    <button (click)="callPeer()">Call</button> <!-- Call button -->
+  </div>
 </div>

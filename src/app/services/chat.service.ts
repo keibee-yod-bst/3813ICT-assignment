@@ -1,39 +1,68 @@
 // src/app/services/chat.service.ts
 import { Injectable } from '@angular/core';
-import { io } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 
-const SOCKET_ENDPOINT = 'http://localhost:3000'; // Adjust as needed
+const SOCKET_ENDPOINT = 'http://localhost:3000'; // Adjust as needed for your setup
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
-  socket: any;
+  private socket: Socket;
 
   constructor() {
-    this.socket = io(SOCKET_ENDPOINT);
+    this.socket = io(SOCKET_ENDPOINT); // Connect to the Socket.IO server
   }
 
-  joinChannel(channelId: string) {
-    this.socket.emit('joinChannel', { channelId });
+  // Join a specific channel with username
+  joinChannel(channelId: string, username: string) {
+    this.socket.emit('joinChannel', { channelId, username });
   }
 
-  sendMessage(channelId: string, message: string) {
-    this.socket.emit('chatMessage', { channelId, message });
+  // Leave the channel
+  leaveChannel(channelId: string, username: string) {
+    this.socket.emit('leaveChannel', { channelId, username });
   }
 
-  receiveMessage(callback: (message: string) => void) {
-    this.socket.on('chatMessage', (data: any) => {
-      callback(data.message);
+  // Send a chat message to the channel
+  sendMessage(channelId: string, username: string, message: string) {
+    this.socket.emit('chatMessage', { channelId, username, message });
+  }
+
+  // Receive real-time chat messages
+  onMessageReceived(
+    callback: (data: { username: string; message: string; timestamp: string }) => void
+  ) {
+    this.socket.on('chatMessage', callback);
+  }
+
+  // Handle chat history retrieval
+  onChatHistoryReceived(callback: (messages: any[]) => void) {
+    this.socket.on('chatHistory', (messages: any[]) => {
+      callback(messages);
     });
   }
 
-  // Method to share peerId
+  // Handle when a user joins a channel
+  onUserJoined(callback: (message: string) => void) {
+    this.socket.on('userJoined', (message: string) => {
+      callback(message);
+    });
+  }
+
+  // Handle when a user leaves a channel
+  onUserLeft(callback: (message: string) => void) {
+    this.socket.on('userLeft', (message: string) => {
+      callback(message);
+    });
+  }
+
+  // Share PeerJS ID within the channel
   sharePeerId(channelId: string, peerId: string) {
     this.socket.emit('sharePeerId', { channelId, peerId });
   }
 
-  // Method to receive peerIds from others
+  // Receive a PeerJS ID from other users
   receivePeerId(callback: (peerId: string) => void) {
     this.socket.on('sharePeerId', (data: { peerId: string }) => {
       callback(data.peerId);
