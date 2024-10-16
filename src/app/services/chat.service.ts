@@ -1,8 +1,10 @@
 // src/app/services/chat.service.ts
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
+import { HttpClient } from '@angular/common/http'; // Inject HttpClient
+import { Observable } from 'rxjs';
 
-const SOCKET_ENDPOINT = 'http://localhost:3000'; // Adjust as needed for your setup
+const SOCKET_ENDPOINT = 'http://localhost:3000'; // Adjust server URL
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +12,18 @@ const SOCKET_ENDPOINT = 'http://localhost:3000'; // Adjust as needed for your se
 export class ChatService {
   private socket: Socket;
 
-  constructor() {
-    this.socket = io(SOCKET_ENDPOINT); // Connect to the Socket.IO server
+  constructor(private http: HttpClient) { // Inject HttpClient here
+    this.socket = io(SOCKET_ENDPOINT);
+  }
+
+  // Upload chat image
+  uploadChatImage(formData: FormData): Observable<any> {
+    return this.http.post(`${SOCKET_ENDPOINT}/upload-chat-image`, formData);
+  }
+
+  // Upload profile image
+  uploadProfileImage(formData: FormData): Observable<any> {
+    return this.http.post(`${SOCKET_ENDPOINT}/upload-profile`, formData);
   }
 
   // Join a specific channel with username

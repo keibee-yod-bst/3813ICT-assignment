@@ -16,10 +16,11 @@ import { FormsModule } from '@angular/forms';
 export class ChatComponent implements OnInit, OnDestroy {
   channelId = ''; // Current channel ID
   username = 'User' + Math.floor(Math.random() * 1000); // Random username
-  messageInput = ''; // Input field value for chat messages
-  messages: { username: string; message: string }[] = []; // Store chat messages
-  systemMessages: string[] = []; // Store system messages (join/leave notifications)
-  onlineUsers: { username: string; peerId?: string }[] = []; // List of online users
+  messageInput = ''; // Chat message input
+  messages: { username: string; message: string; isImage: boolean }[] = []; // Store chat messages
+  systemMessages: string[] = []; // System messages (join/leave notifications)
+  onlineUsers: { username: string; peerId?: string; profileImage?: string }[] = []; // Track online users
+  profileImage: string = ''; // Track user's profile image
 
   peer!: Peer;
   peerId!: string;
@@ -39,25 +40,36 @@ export class ChatComponent implements OnInit, OnDestroy {
     // Retrieve and display chat history
     this.chatService.onChatHistoryReceived((chatHistory) => {
       chatHistory.forEach((msg) => {
-        this.messages.push({ username: msg.username, message: msg.message });
+        this.messages.push({
+          username: msg.username,
+          message: msg.message,
+          isImage: msg.isImage || false,
+        });
       });
       this.scrollToBottom();
     });
 
     // Listen for incoming chat messages
-    this.chatService.onMessageReceived((data) => {
-      this.messages.push(data);
+    this.chatService.onMessageReceived((data: { username: string; message: string; isImage?: boolean }) => {
+      const messageContent = data.isImage 
+        ? `http://localhost:3000${data.message}` // Prefix with backend URL for images
+        : data.message;
+    
+      this.messages.push({
+        username: data.username,
+        message: messageContent,
+        isImage: data.isImage ?? false,
+      });
+    
       this.scrollToBottom();
-    });
+    });    
 
     // Listen for users joining the channel
-    // Adjust the type accordingly
-this.chatService.onUserJoined((user: { username: string; peerId?: string }) => {
-  this.onlineUsers.push(user);
-  this.systemMessages.push(`${user.username} joined the channel`);
-  this.scrollToBottom();
-});
-
+    this.chatService.onUserJoined((user: { username: string; peerId?: string; profileImage?: string }) => {
+      this.onlineUsers.push(user);
+      this.systemMessages.push(`${user.username} joined the channel`);
+      this.scrollToBottom();
+    });
 
     // Listen for users leaving the channel
     this.chatService.onUserLeft((username) => {
@@ -80,6 +92,39 @@ this.chatService.onUserJoined((user: { username: string; peerId?: string }) => {
       this.chatService.sendMessage(this.channelId, this.username, this.messageInput);
       this.messageInput = ''; // Clear input field
     }
+  }
+
+  uploadImage(event: any) {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append('chatImage', file);
+    formData.append('channelId', this.channelId);
+    formData.append('username', this.username);
+
+    this.chatService.uploadChatImage(formData).subscribe(
+      () => {
+        console.log('Image sent successfully');
+      },
+      (error) => {
+        console.error('Failed to send image:', error);
+      }
+    );
+  }
+
+  selectProfileImage(event: any) {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append('profileImage', file);
+
+    this.chatService.uploadProfileImage(formData).subscribe(
+      (response: any) => {
+        this.profileImage = response.imagePath;
+        console.log('Profile image updated:', response.imagePath);
+      },
+      (error) => {
+        console.error('Failed to upload profile image:', error);
+      }
+    );
   }
 
   initializePeer() {
@@ -114,19 +159,19 @@ this.chatService.onUserJoined((user: { username: string; peerId?: string }) => {
       console.error('This user is not available for a call.');
       return;
     }
-  
+
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
       .then((stream) => {
-        this.myVideo.nativeElement.srcObject = stream; // Correctly assign the stream
-    this.myVideo.nativeElement.play(); // Ensure video starts playing
-        const call = this.peer.call(user.peerId as string, stream); // Cast peerId to string
+        this.myVideo.nativeElement.srcObject = stream;
+        this.myVideo.nativeElement.play();
+        const call = this.peer.call(user.peerId as string, stream);
         call.on('stream', (remoteStream) => {
           this.addVideoStream(remoteStream);
         });
       })
       .catch((err) => console.error('Failed to get local stream', err));
-  }  
+  }
 
   addVideoStream(stream: MediaStream) {
     const video = this.myVideo.nativeElement;

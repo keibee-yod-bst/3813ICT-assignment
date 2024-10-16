@@ -7,6 +7,8 @@ const cors = require('cors');
 const { ExpressPeerServer } = require('peer');
 const http = require('http');
 const Message = require('./models/Message'); // Import the Message model
+const multer = require('multer');
+const path = require('path');
 
 // Initialize Express and HTTP server
 const app = express();
@@ -34,6 +36,56 @@ mongoose
 app.use(cors({ origin: 'http://localhost:8080', credentials: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// Configure Multer to store files in the 'uploads' directory
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+const upload = multer({ storage });
+
+// Serve static files from the 'uploads' folder
+app.use('/uploads', express.static('uploads'));
+
+// Route to upload profile images
+app.post('/upload-profile', upload.single('profileImage'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).send('No file uploaded.');
+  }
+  const filePath = `/uploads/${req.file.filename}`;
+  res.json({ imagePath: filePath });
+});
+
+// Route to upload image messages
+app.post('/upload-chat-image', upload.single('chatImage'), async (req, res) => {
+  const { channelId, username } = req.body;
+  const imagePath = `/uploads/${req.file.filename}`;
+
+  const newMessage = new Message({ 
+    channelId, 
+    username, 
+    message: imagePath, 
+    isImage: true 
+  });
+
+  try {
+    await newMessage.save();
+    io.to(channelId).emit('chatMessage', {
+      username,
+      message: imagePath,
+      isImage: true,
+      timestamp: newMessage.timestamp,
+    });
+    res.status(200).send('Image message sent.');
+  } catch (error) {
+    console.error('Error saving image message:', error);
+    res.status(500).send('Failed to send image message.');
+  }
+});
 
 // Define Express routes
 app.post('/register', require('./router/postRegister'));
@@ -68,20 +120,22 @@ io.on('connection', (socket) => {
   });
 
   // Handle incoming chat messages and save to MongoDB
-  socket.on('chatMessage', async ({ channelId, username, message }) => {
-    const newMessage = new Message({ channelId, username, message });
+  // Handle incoming chat messages and save to MongoDB
+socket.on('chatMessage', async ({ channelId, username, message, isImage = false }) => {
+  const newMessage = new Message({ channelId, username, message, isImage });
 
-    try {
-      await newMessage.save(); // Save message to MongoDB
-      io.to(channelId).emit('chatMessage', {
-        username,
-        message,
-        timestamp: newMessage.timestamp,
-      });
-    } catch (error) {
-      console.error('Error saving message:', error);
-    }
-  });
+  try {
+    await newMessage.save(); // Save message to MongoDB
+    io.to(channelId).emit('chatMessage', {
+      username,
+      message,
+      isImage,
+      timestamp: newMessage.timestamp,
+    });
+  } catch (error) {
+    console.error('Error saving message:', error);
+  }
+});
 
   // Handle user leaving the channel
   socket.on('leaveChannel', ({ channelId, username }) => {

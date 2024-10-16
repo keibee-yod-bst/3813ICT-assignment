@@ -6,19 +6,21 @@
       {{ msg }}
     </div>
     <div *ngFor="let msg of messages" class="chat-message">
-      <strong>{{ msg.username }}:</strong> {{ msg.message }}
+      <strong>{{ msg.username }}:</strong>
+      <div *ngIf="msg.isImage; else textMessage">
+        <img [src]="msg.message" alt="Uploaded Image" class="chat-image" />
+      </div>
+      <ng-template #textMessage>
+        <span>{{ msg.message }}</span>
+      </ng-template>
     </div>
   </div>
 
   <!-- Chat Input -->
   <div class="chat-input">
-    <input
-      type="text"
-      [(ngModel)]="messageInput"
-      placeholder="Type your message..."
-      (keyup.enter)="sendMessage()"
-    />
+    <input type="text" [(ngModel)]="messageInput" placeholder="Type your message..." (keyup.enter)="sendMessage()" />
     <button (click)="sendMessage()">Send</button>
+    <input type="file" (change)="uploadImage($event)" />
   </div>
 
   <!-- User List -->
@@ -26,14 +28,26 @@
     <h3>Online Users</h3>
     <ul>
       <li *ngFor="let user of onlineUsers">
+        <img 
+          [src]="user.profileImage ? 'http://localhost:3000' + user.profileImage : 'http://localhost:3000/uploads/default-avatar.png'" 
+          alt="Avatar" 
+          class="user-avatar"
+        />
         {{ user.username }}
         <button (click)="callUser(user)">Video Call</button>
       </li>
     </ul>
+    
   </div>
 
   <!-- Caller Video Chat -->
   <div class="caller-video">
-    <video #myVideo autoplay muted></video> <!-- Video of the calling user -->
+    <video #myVideo autoplay muted></video>
+  </div>
+
+  <!-- Profile Image Upload -->
+  <div class="profile-upload">
+    <h3>Update Profile Image</h3>
+    <input type="file" (change)="selectProfileImage($event)" />
   </div>
 </div>
