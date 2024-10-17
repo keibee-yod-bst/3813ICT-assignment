@@ -133,7 +133,7 @@ This chat application allows users to:
 
 ### 2. Server-side PeerJS Setup:
 ```bash
-npx peerjs --port 8080
+npx peerjs --port 9000
 ```
 This server handles the signaling for Peer-to-Peer (P2P) connections.
 
